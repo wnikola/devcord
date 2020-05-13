@@ -1,25 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import Landing from './components/Landing';
+import PublicRoute from './components/PublicRoute';
+import { isLogin } from './utils';
+import SelectRoom from './components/SelectRoom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path='/' component={isLogin() ? SelectRoom : Landing}></Route>
+        {/* <Route exact path='/login' component={SignIn}></Route> */}
+        <PublicRoute restricted={true} component={SignIn} path='/login' exact />
+        <Route exact path='/signup' component={SignUp}></Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
