@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import IconButton from '@material-ui/core/IconButton';
 // import MenuIcon from '@material-ui/icons/Menu';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import { isLogin } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +36,7 @@ export default function TopAppBar() {
             <MenuIcon />
           </IconButton> */}
           <Typography variant="h6" className={classes.title}>
-            <Link href="/" className={classes.link}>
+            <Link to="/" className={classes.link}>
               {'</> devcord'}
             </Link>
           </Typography>
@@ -46,8 +47,8 @@ export default function TopAppBar() {
                 localStorage.removeItem('token');
                 window.location.reload();
               }}>Log out</Button>
-              : <><Button color="inherit" href="/login">Login</Button>
-                <Button color="inherit" href="/signup">Sign Up</Button></>
+              : <><Button color="inherit" component={Link} to='/login'>Login</Button>
+                <Button color="inherit" component={Link} to='/signup'>Sign Up</Button></>
           }
 
 
