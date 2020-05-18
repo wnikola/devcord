@@ -1,20 +1,27 @@
 import React from 'react';
-import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Landing from './components/Landing';
 import PublicRoute from './components/PublicRoute';
+import PrivateRoute from './components/PrivateRoute';
 import { isLogin } from './utils';
 import SelectRoom from './components/SelectRoom';
+import Room from './components/Room';
+// import Frontpage from './components/FrontPage';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path='/' component={isLogin() ? SelectRoom : Landing}></Route>
-        {/* <Route exact path='/login' component={SignIn}></Route> */}
+        <Route exact path='/' render={(props) =>
+          isLogin()
+            ? <SelectRoom {...props} />
+            : <Landing />
+        }></Route>
         <PublicRoute restricted={true} component={SignIn} path='/login' exact />
-        <Route exact path='/signup' component={SignUp}></Route>
+        <PublicRoute restricted={true} component={SignUp} path='/signup' exact />
+        <PrivateRoute component={props => <Room {...props} />} path='/rooms/:room'></PrivateRoute>
       </Switch>
     </BrowserRouter>
   );

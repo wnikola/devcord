@@ -3,11 +3,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+// import Box from '@material-ui/core/Box';
 // import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,18 +15,18 @@ import Container from '@material-ui/core/Container';
 import { signUp } from '../services/apiService';
 import TopAppBar from './AppBar';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://material-ui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({ history }) {
   const classes = useStyles();
 
   const [username, setUsername] = useState('');
@@ -56,8 +56,15 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-    signUp(username, email, password);
-  }
+    signUp(username, email, password)
+      .then(res => {
+        if (res.data.success) {
+          localStorage.setItem('token', res.data.accessToken);
+          localStorage.setItem('username', res.data.username);
+          history.push('/');
+        }
+      });
+  };
 
   return (
     <>
@@ -82,6 +89,7 @@ export default function SignUp() {
                   fullWidth
                   id="username"
                   label="Username"
+                  helperText="Must be at least 3 characters long"
                   autoFocus
                   onChange={e => { setUsername(e.target.value) }}
                 />
@@ -108,15 +116,16 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  helperText="Must be at least 8 characters long, contain a letter and a number"
                   onChange={e => { setPassword(e.target.value) }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -140,9 +149,9 @@ export default function SignUp() {
             </Grid>
           </form>
         </div>
-        <Box mt={5}>
+        {/* <Box mt={5}>
           <Copyright />
-        </Box>
+        </Box> */}
       </Container>
     </>
   );

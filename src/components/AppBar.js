@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 // import IconButton from '@material-ui/core/IconButton';
 // import MenuIcon from '@material-ui/icons/Menu';
 import Link from '@material-ui/core/Link';
+import { isLogin } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,14 +39,18 @@ export default function TopAppBar() {
               {'</> devcord'}
             </Link>
           </Typography>
-          <Button color="inherit" href="/login">Login</Button>
-          <Button color="inherit" href="/signup">Sign Up</Button>
-          <Button color="inherit" onClick={e => {
-            e.preventDefault();
-            // localStorage.setItem('token', '');
-            localStorage.removeItem('token');
-            console.log(localStorage.getItem('token'));
-          }}>Log out</Button>
+          {
+            isLogin()
+              ? <Button color="inherit" onClick={e => {
+                e.preventDefault();
+                localStorage.removeItem('token');
+                window.location.reload();
+              }}>Log out</Button>
+              : <><Button color="inherit" href="/login">Login</Button>
+                <Button color="inherit" href="/signup">Sign Up</Button></>
+          }
+
+
         </Toolbar>
       </AppBar>
     </div>

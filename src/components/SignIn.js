@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import TopAppBar from './AppBar';
-import { isLogin } from '../utils';
 
 // function Copyright() {
 //   return (
@@ -52,28 +51,16 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn({ history }) {
   const classes = useStyles();
 
-  // const handleSubmit = () => {
-  //   signIn(login, password)
-  //     .then(res => {
-  //       console.log(res.data);
-  //       if (res.data.message === 'Logged in') {
-  //         localStorage.setItem('token', res.data.accessTokken);
-  //         localStorage.setItem('username', res.data.username);
-  //         // if (isLogin()) history.push('/');
-  //         console.log(localStorage.getItem('token'));
-  //         setTimeout(() => history.push('/'), 0);
-  //       }
-  //     });
-  // };
-
-  const handleSubmit = async () => {
-    let res = await signIn(login, password);
-    if (res.data.message === 'Logged in') {
-      localStorage.setItem('token', res.data.accessToken);
-      localStorage.setItem('username', res.data.username);
-      history.push('/');
-    }
-  }
+  const handleSubmit = () => {
+    signIn(login, password)
+      .then(res => {
+        if (res.data.message === 'Logged in') {
+          localStorage.setItem('token', res.data.accessToken);
+          localStorage.setItem('username', res.data.username);
+          history.push('/');
+        }
+      });
+  };
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
