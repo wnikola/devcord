@@ -36,7 +36,19 @@ export default function TopAppBar() {
             <MenuIcon />
           </IconButton> */}
           <Typography variant="h6" className={classes.title}>
-            <Link to="/" className={classes.link}>
+            <Link to="/" className={classes.link} onClick={() => {
+              if (navigator.share)
+                navigator
+                  //@ts-ignore
+                  .share({
+                    title: "title",
+                    url: "https://freecords.com",
+                    text: "some text",
+                  })
+                  .then(() => console.log("Sharing"))
+                  .catch((err) => console.log("Can't share: ", err));
+              else console.log("Share not supported");
+            }}>
               {'</> devcord'}
             </Link>
           </Typography>
