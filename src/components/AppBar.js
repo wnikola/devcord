@@ -51,6 +51,19 @@ export default function TopAppBar() {
             }}>
               {'</> devcord'}
             </Link>
+            {navigator.share ? (
+            <Button color="inherit" onClick={() => {
+              navigator
+                  .share({
+                    title: "title",
+                    url: "https://freecords.com",
+                    text: "some text",
+                  })
+                  .then(() => console.log("Sharing"))
+                  .catch((err) => console.log("Can't share: ", err));
+            }}>Share</Button>
+            ) : null
+            }
           </Typography>
           {
             isLogin()
