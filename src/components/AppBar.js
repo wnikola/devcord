@@ -64,6 +64,19 @@ export default function TopAppBar() {
             }}>Share</Button>
             ) : null
             }
+            {navigator.share ? (
+            <Button color="inherit" onClick={() => {
+              navigator
+                  .share({
+                    title: "title",
+                    url: "https://app.freecords.com/song-play?1bb42932-c065-4532-8f4b-41f11e2931f9",
+                    text: "Join me at Freecords! ",
+                  })
+                  .then(() => console.log("Sharing"))
+                  .catch((err) => console.log("Can't share: ", err));
+            }}>Share Song</Button>
+            ) : null
+            }
           </Typography>
           {
             isLogin()
